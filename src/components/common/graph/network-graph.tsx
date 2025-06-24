@@ -67,7 +67,7 @@ export default function NetworkGraph({
   const offsetY = centerHCPData ? -centerHCPData.y : 0;
 
   return (
-    <div className="relative p-5 gap-5 bg-white  flex flex-col md:flex-row   w-full h-full">
+    <div className="relative p-5 gap-5 bg-white  flex flex-col-reverse md:flex-row   w-full h-full">
       {/* Selected Node Details Panel */}
       {selectedHCP && <ProfileCard />}
       <svg
