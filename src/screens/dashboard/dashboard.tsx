@@ -6,33 +6,31 @@ import Layout from "@/components/layout/layout";
 import { useHCP, type HCP } from "@/context/hcp-context";
 import { mockConnections, mockHCPs } from "./data";
 import { HCPSearch } from "@/components/common/hcp-search/hcp-search";
+import { ProfileCard } from "@/components/common/profile-card";
+
+interface Connection {
+  source: string;
+  target: string;
+  type: string;
+  strength: number;
+  details?: string;
+}
 
 export default function HealthcareNetworkApp() {
   const [showConnections, setShowConnections] = useState(true);
-  const { selectedHCP } = useHCP();
-  const [centerHCP, setCenterHCP] = useState(selectedHCP?.id || "emily-carter");
+  const { selectedHCP, setSelectedHCP } = useHCP();
 
-  // Log selectedHCP to verify context updates
-  console.log("Current selectedHCP:", selectedHCP);
-
-  // Sync centerHCP with selectedHCP
-  useEffect(() => {
-    setCenterHCP(selectedHCP?.id || "emily-carter");
-  }, [selectedHCP]);
-
-  const updatedHCPs = mockHCPs.map((hcp) => ({
-    ...hcp,
-    isCenter: selectedHCP ? hcp.id === selectedHCP.id : hcp.id === "emily-carter",
-  }));
-
+  // When an HCP is selected via search, update the global context.
   const handleSelectHCP = (hcp: HCP | null) => {
-    console.log("HCP selected in parent:", hcp);
-    setCenterHCP(hcp?.id || "emily-carter");
+    setSelectedHCP(hcp);
   };
+
+  const updatedHCPs = mockHCPs;
+
 
   return (
     <Layout>
-      <div className="flex-1 overflow-y-auto h-full">
+      <div className="flex-1 rounded-lg pb-10 overflow-y-auto h-full">
         <div className="mb-6">
           <div className="flex p-4 rounded-lg bg-white w-full items-center justify-start mb-4">
             <HCPSearch hcps={mockHCPs} onSelectHCP={handleSelectHCP} />
@@ -43,13 +41,18 @@ export default function HealthcareNetworkApp() {
           <h1 className="text-2xl font-bold text-gray-900">PeerSpace</h1>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 h-[600px]">
-          <NetworkGraph
-            hcps={updatedHCPs}
-            connections={mockConnections}
-            centerHCP={centerHCP}
-            showConnections={showConnections}
-          />
+        <div className="relative gap-5 h-fit flex flex-col-reverse md:flex-row w-full">
+          {/* Profile Card should ALWAYS be mounted to receive context updates */}
+          <div className="bg-white rounded-lg p-2">
+            <ProfileCard />
+          </div>
+          <div className="bg-white flex-1 rounded-lg p-2">
+            <NetworkGraph
+              hcps={updatedHCPs}
+              connections={mockConnections as Connection[]}
+              showConnections={showConnections}
+            />
+          </div>
         </div>
       </div>
     </Layout>

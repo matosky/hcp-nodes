@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <HCPProvider>
-      <div className="flex gap-5 md:pr-5 pr-auto px-5 pt-5 w-screen h-screen overflow-hidden bg-gray-200">
+      <div className="flex gap-5 md:pr-5 pr-auto p-2 pt-5 w-screen h-screen overflow-hidden bg-gray-200">
         {/* Desktop Sidebar */}
         <div className="hidden lg:block">
           <Sidebar />
@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Sidebar onClose={() => setSidebarOpen(false)} />
         </div>
 
-        <main className="flex-1 gap-5 pb-10 flex flex-col">
+        <main className="flex-1 bg gap-5 flex flex-col">
           <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
           {children}
         </main>

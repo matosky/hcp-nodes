@@ -26,23 +26,23 @@ export const Header = ({ onMenuClick, sidebarOpen }: HeaderProps) => {
         </Button>
 
         <div className="flex items-center gap-3">
-          <div className="relative w-10 h-10">
+          <div className="relative w-6 h-6">
           {(selectedHCP && selectedHCP?.image !== null) ? 
             <img
               src={selectedHCP?.image}
               alt={selectedHCP?.name}
-              width={56}
-              height={56}
+              width={20}
+              height={20}
               className="rounded-full object-cover border border-gray-200"
             />: 
             <div
-              className="rounded-full w-[36px] bg-orange-400 h-[36px] border border-gray-200"
+              className="rounded-full w-[20px] bg-orange-400 h-[20px] border border-gray-200"
             />
             }
           </div>
           <div className="flex flex-col">
-            <h2 className="text-lg font-semibold text-gray-900 leading-tight">{selectedHCP?.name}</h2>
-            <p className="text-xs text-gray-400 leading-tight">{selectedHCP?.specialization}</p>
+            <h2 className="md:text-lg text-xs font-semibold text-gray-900 leading-tight">{selectedHCP?.name}</h2>
+            <p className="text-xs text-gray-400 max-w-sm text-ellipsis leading-tight">{selectedHCP?.specialization}</p>
           </div>
         </div>
 
